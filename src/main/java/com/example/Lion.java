@@ -3,11 +3,10 @@ package com.example;
 import java.util.List;
 
 public class Lion {
-
     private final Predator predator;
     private final boolean hasMane;
 
-    public Lion(Predator predator, String sex) throws Exception {
+    public Lion(String sex, Predator predator) throws Exception {
         this.predator = predator;
         if ("Самец".equals(sex)) {
             hasMane = true;
@@ -19,7 +18,7 @@ public class Lion {
     }
 
     public int getKittens() {
-        return ((Feline) predator).getKittens(); // Приведение типа к Feline, если оно гарантированно
+        return ((Feline) predator).getKittens(); // Обращаемся к методу getKittens через кастинг предатора
     }
 
     public boolean doesHaveMane() {
@@ -27,7 +26,14 @@ public class Lion {
     }
 
     public List<String> getFood() throws Exception {
-        return predator.eatMeat();
+        return predator.eatMeat(); // Теперь используем интерфейс Predator
     }
 
+    public String getFamily() {
+        return "Кошачьи"; // Переместил метод сюда, так как больше нет прямой зависимости от Feline
+    }
+
+    public String makeSound() {
+        return "Ррр!";
+    }
 }

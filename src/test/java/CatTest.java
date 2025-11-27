@@ -8,9 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import static org.mockito.Mockito.when;
@@ -25,8 +27,9 @@ public class CatTest {
     @Before
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(mockPredator.eatMeat()).thenReturn(List.of("Кролики"));
-        cat = new Cat(mockPredator);
+        Feline feline = new Feline(); // Настоящий объект Feline
+        cat = new Cat(feline); // Связываем реальный объект Feline с Cat
+        when(mockPredator.eatMeat()).thenReturn(List.of("Животные", "Птицы", "Рыба")); // Эмулируем еду хищника
     }
 
     @Test
@@ -36,7 +39,6 @@ public class CatTest {
 
     @Test
     public void testGetFood() throws Exception {
-        assertEquals(List.of("Кролики"), cat.getFood());
+        assertEquals(List.of("Животные", "Птицы", "Рыба"), cat.getFood());
     }
-
 }

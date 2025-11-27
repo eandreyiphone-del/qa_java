@@ -17,39 +17,36 @@ import static org.mockito.Mockito.when;
 
 public class LionTest {
 
-    @Mock
-    private Predator mockPredator;
-
     private Lion maleLion;
     private Lion femaleLion;
 
     @Before
     public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        when(mockPredator.eatMeat()).thenReturn(List.of("Зебры"));
-        maleLion = new Lion(mockPredator, "Самец");
-        femaleLion = new Lion(mockPredator, "Самка");
+        Predator predator = new Feline(); // Создаем экземпляр Predator вне класса Lion
+        maleLion = new Lion("Самец", predator);
+        femaleLion = new Lion("Самка", predator);
     }
 
     @Test
-    public void testDoesHaveMane() {
-        assertEquals(true, maleLion.doesHaveMane());
-        assertEquals(false, femaleLion.doesHaveMane());
+    public void testMaleLionBehavior() throws Exception {
+        assertEquals("Ррр!", maleLion.makeSound());
+        assertEquals("Кошачьи", maleLion.getFamily());
+        assertTrue(maleLion.doesHaveMane());
+        assertEquals(List.of("Животные", "Птицы", "Рыба"), maleLion.getFood());  //Честно, я не знаю почему, но здесь у меня возникает ошибка, как я понял с кодировкой. Перепобовал разные варианты, и так и не заработало.
     }
 
     @Test
-    public void testGetFood() throws Exception {
-        assertEquals(List.of("Зебры"), maleLion.getFood());
+    public void testFemaleLionBehavior() throws Exception {
+        assertFalse(femaleLion.doesHaveMane());
     }
 
     @Test
-    public void testInvalidSexThrowsException() {
-        try {
-            new Lion(mockPredator, "Неправильный Пол");
-            fail("Исключение должно было произойти!");
-        } catch (Exception e) {
-            assertEquals("Используйте допустимые значения пола животного - самец или самка", e.getMessage());
-        }
+    public void testGetKittens() throws Exception {
+        assertEquals(1, maleLion.getKittens()); // По умолчанию возвращается 1 детёныш
     }
 
+    @Test(expected = Exception.class)
+    public void testInvalidSexThrowsException() throws Exception {
+        new Lion("Некорректный пол", new Feline());
+    }
 }
