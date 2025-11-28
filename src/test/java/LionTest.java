@@ -22,29 +22,48 @@ public class LionTest {
 
     @Before
     public void setup() throws Exception {
-        Predator predator = new Feline(); // Создаем экземпляр Predator вне класса Lion
-        maleLion = new Lion("Самец", predator);
-        femaleLion = new Lion("Самка", predator);
+        Feline feline = new Feline();
+        maleLion = new Lion("Самец", feline);
+        femaleLion = new Lion("Самка", feline);
     }
 
+    // Проверка звука самца льва
     @Test
-    public void testMaleLionBehavior() throws Exception {
+    public void testMakeSoundForMaleLion() throws Exception {
         assertEquals("Ррр!", maleLion.makeSound());
-        assertEquals("Кошачьи", maleLion.getFamily());
-        assertTrue(maleLion.doesHaveMane());
-        assertEquals(List.of("Животные", "Птицы", "Рыба"), maleLion.getFood());  //Честно, я не знаю почему, но здесь у меня возникает ошибка, как я понял с кодировкой. Перепобовал разные варианты, и так и не заработало.
     }
 
+    // Проверка семейства самца льва
     @Test
-    public void testFemaleLionBehavior() throws Exception {
+    public void testFamilyForMaleLion() throws Exception {
+        assertEquals("Кошачьи", maleLion.getFamily());
+    }
+
+    // Проверка наличия гривы у самца льва
+    @Test
+    public void testHasManeForMaleLion() throws Exception {
+        assertTrue(maleLion.doesHaveMane());
+    }
+
+    // Проверка рациона самца льва
+    @Test
+    public void testFoodForMaleLion() throws Exception {
+        assertEquals(Arrays.asList("Животные", "Птицы", "Рыба"), maleLion.getFood());
+    }
+
+    // Проверка отсутствия гривы у самки льва
+    @Test
+    public void testFemaleLionDoesNotHaveMane() throws Exception {
         assertFalse(femaleLion.doesHaveMane());
     }
 
+    // Проверка правильного количества детёнышей
     @Test
     public void testGetKittens() throws Exception {
-        assertEquals(1, maleLion.getKittens()); // По умолчанию возвращается 1 детёныш
+        assertEquals(1, maleLion.getKittens());
     }
 
+    // Проверка исключения при неверном поле
     @Test(expected = Exception.class)
     public void testInvalidSexThrowsException() throws Exception {
         new Lion("Некорректный пол", new Feline());

@@ -3,11 +3,14 @@ package com.example;
 import java.util.List;
 
 public class Lion {
-    private final Predator predator;
+    private final Feline feline;
     private final boolean hasMane;
 
-    public Lion(String sex, Predator predator) throws Exception {
-        this.predator = predator;
+    /**
+     * Инъекция готового объекта Feline в конструктор.
+     */
+    public Lion(String sex, Feline feline) throws Exception {
+        this.feline = feline;
         if ("Самец".equals(sex)) {
             hasMane = true;
         } else if ("Самка".equals(sex)) {
@@ -18,7 +21,7 @@ public class Lion {
     }
 
     public int getKittens() {
-        return ((Feline) predator).getKittens(); // Обращаемся к методу getKittens через кастинг предатора
+        return feline.getKittens(); // Использование объекта Feline
     }
 
     public boolean doesHaveMane() {
@@ -26,11 +29,11 @@ public class Lion {
     }
 
     public List<String> getFood() throws Exception {
-        return predator.eatMeat(); // Теперь используем интерфейс Predator
+        return feline.eatMeat(); // Получаем рацион питания через объект Feline
     }
 
     public String getFamily() {
-        return "Кошачьи"; // Переместил метод сюда, так как больше нет прямой зависимости от Feline
+        return "Кошачьи";
     }
 
     public String makeSound() {

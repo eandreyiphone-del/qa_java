@@ -16,13 +16,14 @@ public class FelineParameterizedTest {
     private final String expectedFamily;
     private final List<String> expectedFood;
 
-    // Исправьте конструктор, убрав "void"
+    // Конструктор, принимающий аргументы из таблицы параметров
     public FelineParameterizedTest(String animalType, String expectedFamily, List<String> expectedFood) {
         this.animalType = animalType;
         this.expectedFamily = expectedFamily;
         this.expectedFood = expectedFood;
     }
 
+    // Таблица с параметрами, которые будут использоваться в тестах
     @Parameterized.Parameters(name="Тест с типом '{0}'")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
@@ -31,11 +32,18 @@ public class FelineParameterizedTest {
         });
     }
 
+    // Первый тест проверяет название семейства
     @Test
-    public void testGetFamilyAndFood() throws Exception {
+    public void testGetFamily() {
         Feline feline = new Feline();
         assertEquals(expectedFamily, feline.getFamily());
-        assertEquals(expectedFood, feline.getFood(animalType)); // Имитация передачи типа животного
+    }
+
+    // Второй тест проверяет рацион питания
+    @Test
+    public void testGetFood() throws Exception {
+        Feline feline = new Feline();
+        assertEquals(expectedFood, feline.getFood(animalType));
     }
 }
 
